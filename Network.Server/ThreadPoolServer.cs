@@ -19,7 +19,6 @@ namespace Network.Server
                     if (workerThreads == 0) { continue; }
 
                     var client = new Client.Client(Listener.AcceptTcpClient());
-                    Console.WriteLine($"Client connected No.{ConnectedClients()}");
                     ThreadPool.QueueUserWorkItem(state => HandleClient?.Invoke(this, client));
                 }
             }
@@ -27,13 +26,6 @@ namespace Network.Server
             {
                 Console.WriteLine(e);
             }
-        }
-
-        private int ConnectedClients()
-        {
-            ThreadPool.GetAvailableThreads(out int available, out _);
-            ThreadPool.GetMaxThreads(out int max, out _);
-            return max - available;
         }
 
         public override void Close()
@@ -44,7 +36,7 @@ namespace Network.Server
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Console.WriteLine((e));
             }
         }
     }
