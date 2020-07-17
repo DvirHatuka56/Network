@@ -1,0 +1,9 @@
+# Rider files
+/.idea/
+
+# Build files
+/Network.Client/obj/
+/Network.Client/bin/
+
+/Network.Server/obj/
+/Network.Server/bin/
