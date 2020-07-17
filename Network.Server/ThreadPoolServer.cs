@@ -5,17 +5,9 @@ namespace Network.Server
 {
     public class ThreadPoolServer : Server
     {
-        private int MaxWorkers { get; }
-        private int MinWorkers { get; }
-        public override event EventHandler<Client> HandleClient;
+        public override event EventHandler<Client.Client> HandleClient;
         
-        public ThreadPoolServer()
-        {
-            ThreadPool.GetMaxThreads(out int workerThreads, out _);
-            MaxWorkers = workerThreads;
-            ThreadPool.GetMinThreads(out workerThreads, out _);
-            MinWorkers = workerThreads;
-        }
+        public ThreadPoolServer(string ip = "127.0.0.1", int port = 42069) : base(ip, port) { }
         
         protected override void Listen()
         {
@@ -26,8 +18,8 @@ namespace Network.Server
                     ThreadPool.GetAvailableThreads(out int workerThreads, out _);
                     if (workerThreads == 0) { continue; }
 
-                    var client = new Client(Listener.AcceptTcpClient());
-                    Console.WriteLine($"Client connected No.{Connected()}");
+                    var client = new Client.Client(Listener.AcceptTcpClient());
+                    Console.WriteLine($"Client connected No.{ConnectedClients()}");
                     ThreadPool.QueueUserWorkItem(state => HandleClient?.Invoke(this, client));
                 }
             }
@@ -37,10 +29,11 @@ namespace Network.Server
             }
         }
 
-        private int Connected()
+        private int ConnectedClients()
         {
-            ThreadPool.GetAvailableThreads(out int threads, out _);
-            return MaxWorkers - threads;
+            ThreadPool.GetAvailableThreads(out int available, out _);
+            ThreadPool.GetMaxThreads(out int max, out _);
+            return max - available;
         }
 
         public override void Close()

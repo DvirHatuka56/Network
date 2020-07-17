@@ -8,7 +8,7 @@ namespace Network.Server
     public class Server
     {
         protected TcpListener Listener { get; }
-        public virtual event EventHandler<Client> HandleClient; 
+        public virtual event EventHandler<Client.Client> HandleClient; 
 
         public Server(string ip = "127.0.0.1", int port = 42069)
         {
@@ -49,7 +49,7 @@ namespace Network.Server
                 while (true)
                 {
                     TcpClient client = Listener.AcceptTcpClient();
-                    Thread handle = new Thread(() => HandleClient?.Invoke(this, new Client(client)));
+                    Thread handle = new Thread(() => HandleClient?.Invoke(this, new Client.Client(client)));
                     handle.Start();
                 }
             }
