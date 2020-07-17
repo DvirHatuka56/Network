@@ -75,7 +75,6 @@ namespace Network.Client
 		
 		/// <summary>
 		/// Closes the socket.
-		/// To open new one use "new" statement
 		/// </summary>
 		public void Close()
 		{
