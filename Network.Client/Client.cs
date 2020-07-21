@@ -8,6 +8,7 @@ namespace Network.Client
     {
         private readonly TcpClient _client;
 		private readonly NetworkStream _serverStream;
+		public bool IsConnected => _client.Connected;
 		
 		
 		/// <summary>
