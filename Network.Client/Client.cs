@@ -40,8 +40,7 @@ namespace Network.Client
 		{
 			byte[] inStream = new byte[bytes];
 			_serverStream.Read(inStream, 0, bytes);
-			inStream = ResizeBuffer(inStream);
-			return Encoding.UTF8.GetString(inStream);
+			return Encoding.UTF8.GetString(ResizeBuffer(inStream));
 		}
 		
 		/// <summary>
@@ -52,8 +51,7 @@ namespace Network.Client
 		{
 			byte[] inStream = new byte[bytes];
 			_serverStream.Read(inStream, 0, bytes);
-			inStream = ResizeBuffer(inStream);
-			return int.Parse(Encoding.UTF8.GetString(inStream));
+			return int.Parse(Encoding.UTF8.GetString(ResizeBuffer(inStream)));
 		}
 		
 		/// <summary>
